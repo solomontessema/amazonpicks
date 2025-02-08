@@ -1,0 +1,145 @@
+<p style="font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Discover the best binoculars, telescopes, filters, camera adapters, and cameras carefully selected to enhance your stargazing and astrophotography experience. We’ve curated this week’s top recommendations based on expert reviews, user feedback, and in-depth analysis—ensuring you get the best balance of cost, quality, and performance for your celestial adventures. Whether you're a beginner or a seasoned astronomer, these picks will help you capture the wonders of the night sky like never before!
+</p>
+
+<p style="font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.5; color: #555;">
+  As an Amazon Associate, I earn from qualifying purchases. When you buy through links on this page, I may earn a small commission at no extra cost to you. Happy stargazing!
+</p>
+
+<div class="affiliate-wrapper">
+  <ul id="affiliate-product-list"></ul>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .affiliate-wrapper {
+    background-color: #ffffff;
+    padding: 20px;
+  }
+
+  #affiliate-product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  #affiliate-product-list li {
+    text-align: left;
+    flex: 1 0 calc(33.33% - 20px);
+    max-width: calc(33.33% - 20px);
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.2s ease-in-out;
+    background: #fff;
+  }
+
+  #affiliate-product-list li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  #affiliate-product-list li img {
+    width: 100%;
+    height: auto;
+    max-height: 160px;
+    object-fit: contain;
+    margin-bottom: 12px;
+    border-radius: 5px;
+  }
+
+  #affiliate-product-list li div {
+    font-size: 14px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    margin-top: 8px;
+    width: 100%;
+    font-weight: 500;
+  }
+
+  #affiliate-product-list li a {
+    text-decoration: none;
+    color: #333; /* Black text */
+    font-weight: 600;
+    transition: color 0.2s ease-in-out;
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+
+  #affiliate-product-list li a:hover {
+    color: #666; /* Gray on hover */
+    text-decoration: none;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    #affiliate-product-list li {
+      flex: 1 0 calc(50% - 20px);
+      max-width: calc(50% - 20px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    #affiliate-product-list li {
+      flex: 1 0 100%;
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script>
+  const affiliateSpreadsheetId = "1uC34hI5AT2Uxrp5rVmEpsc07-4aRrKnRaMcjpiUVZJw";
+  const affiliateApiKey = "AIzaSyCAY4rjXddC2nK1TNbu5SEQawCYLty9k04";
+  const affiliateRange = "AmazonAffiliateSkywatching!A1:C";
+
+  function fetchAffiliateData() {
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${affiliateSpreadsheetId}/values/${affiliateRange}?key=${affiliateApiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        const rows = data.values.slice(1); // Skip header row
+        displayAffiliateProducts(rows);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }
+
+  function displayAffiliateProducts(products) {
+    const productsList = document.getElementById('affiliate-product-list');
+    productsList.innerHTML = ''; // Clear previous content
+
+    products.forEach(product => {
+      const [name, imageUrl, affiliateLink] = product;
+      const listItem = document.createElement('li');
+
+      listItem.innerHTML = `
+        <a href="${affiliateLink}" target="_blank">
+          <img src="${imageUrl}" alt="${name}">
+        </a>
+        <div>
+          <a href="${affiliateLink}" target="_blank">${name}</a>
+        </div>
+      `;
+
+      productsList.appendChild(listItem);
+    });
+  }
+
+  fetchAffiliateData();
+</script>
