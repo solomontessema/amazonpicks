@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best Picks from Amazon | Affiliate Picks</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Amazon+Ember:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Amazon-like Styles */
+    body {
+      font-family: 'Amazon Ember', Arial, sans-serif;
+      background-color: #F3F3F3;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navigation Bar */
+    .affiliate-header {
+      background-color: #232F3E;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .site-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #FFA41C;
+      margin-right: 20px;
+    }
+
+    .search-bar {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-bar input {
+      width: 100%;
+      max-width: 500px;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #DDD;
+      border-radius: 5px;
+    }
+
+    /* Affiliate Product List */
+    .affiliate-wrapper {
+      max-width: 1200px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #affiliate-product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    #affiliate-product-list li {
+      background: white;
+      flex: 1 0 calc(33.33% - 20px);
+      max-width: calc(33.33% - 20px);
+      border: 1px solid #DDD;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.2s ease-in-out;
+    }
+
+    #affiliate-product-list li:hover {
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    #affiliate-product-list li img {
+      width: 100%;
+      height: auto;
+      max-height: 180px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    #affiliate-product-list li a {
+      text-decoration: none;
+      color: #007185;
+      font-weight: bold;
+      font-size: 16px;
+      display: block;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .check-price-button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #FFA41C;
+      color: #111;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: auto;
+      transition: background 0.3s;
+    }
+
+    .check-price-button:hover {
+      background: #FF9900;
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      padding: 10px;
+      background: #F8F8F8;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      #affiliate-product-list li {
+        flex: 1 0 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      #affiliate-product-list li {
+        flex: 1 0 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="affiliate-header">
+    <div class="site-title">Top Picks from Amazon</div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search for products...">
+    </div>
+  </div>
+
+  <div class="affiliate-wrapper">
+    <h2 style="text-align: center; color: #111;">Discover the Best Picks from Amazon</h2>
+
+    <!-- Disclaimer placed above product links -->
+    <p class="disclaimer">
+      As an Amazon Associate, I earn from qualifying purchases. When you buy through links on this page, I may earn a small commission at no extra cost to you.
+    </p>
+
+    <ul id="affiliate-product-list"></ul>
+  </div>
+
+  <script>
+    const affiliateSpreadsheetId = "1uC34hI5AT2Uxrp5rVmEpsc07-4aRrKnRaMcjpiUVZJw";
+    const affiliateApiKey = "AIzaSyCAY4rjXddC2nK1TNbu5SEQawCYLty9k04";
+    const affiliateRange = "AmazonAffiliateArt!A1:C";
+
+    function fetchAffiliateData() {
+      fetch(`https://sheets.googleapis.com/v4/spreadsheets/${affiliateSpreadsheetId}/values/${affiliateRange}?key=${affiliateApiKey}`)
+        .then(response => response.json())
+        .then(data => {
+          const rows = data.values.slice(1); // Skip header row
+          displayAffiliateProducts(rows);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+
+    function displayAffiliateProducts(products) {
+      const productsList = document.getElementById('affiliate-product-list');
+      productsList.innerHTML = ''; // Clear previous content
+
+      products.forEach(product => {
+        const [name, imageUrl, affiliateLink] = product;
+        const listItem = document.createElement('li');
+
+        listItem.innerHTML = `
+          <a href="${affiliateLink}" target="_blank">
+            <img src="${imageUrl}" alt="${name}">
+          </a>
+          <a href="${affiliateLink}" target="_blank">${name}</a>
+          <a href="${affiliateLink}" target="_blank" class="check-price-button">Check Price on Amazon</a>
+        `;
+
+        productsList.appendChild(listItem);
+      });
+    }
+
+    fetchAffiliateData();
+  </script>
+
+</body>
+</html>
