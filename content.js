@@ -10,7 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("title").textContent = "Invalid Selection!";
       return;
     }
-  
+ 
+    document.getElementById("close-content").addEventListener("click", function () {
+      document.getElementById("content-display").classList.add("hidden");
+    });
+
     function fetchContentData() {
       fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetRange}?key=${apiKey}`)
         .then(response => response.json())
@@ -83,6 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("activity-content").innerHTML = formattedContent; // Use innerHTML to keep formatting
         document.getElementById("content-display").classList.remove("hidden");
       }
+
+
+
+        
   
     fetchContentData();
   });
