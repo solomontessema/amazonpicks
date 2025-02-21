@@ -79,18 +79,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   
     function showContent(title, content) {
-        document.getElementById("activity-title").textContent = title;
-      
-        // Convert new lines (\n) into <br> tags
-        const formattedContent = content.replace(/\n/g, "<br>");
-      
-        document.getElementById("activity-content").innerHTML = formattedContent; // Use innerHTML to keep formatting
-        document.getElementById("content-display").classList.remove("hidden");
-      }
-
-
-
-        
+      document.getElementById("activity-title").textContent = title;
+  
+      // Convert new lines (\n) into <br> tags
+      const formattedContent = content.replace(/\n/g, "<br>");
+  
+      // Properly format the image tag (Fixed syntax)
+      const imageHtml = `<img src="https://tse1.mm.bing.net/th?id=OIG3.7wVf2i02DkQrNejy7aX7&pid=ImgGn" style="width: 50%; display: block; margin: 0 auto;">`;
+  
+      // Add the image on top of the content
+      document.getElementById("activity-content").innerHTML = imageHtml + formattedContent;
+  
+      // Show the content display
+      document.getElementById("content-display").classList.remove("hidden");
+  }
+  
+    
   
     fetchContentData();
   });
